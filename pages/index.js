@@ -76,8 +76,8 @@ export default function Home() {
 
     if (!file) return;
 
-    if (file.size > 10 * 1024 * 1024) {
-      showNotification('Foto kegedean, cuy. Maksimal 10MB.', 'error');
+    if (file.size > 1.5 * 1024 * 1024) {
+      showNotification('Ukuran gambar maksimal 1.5MB.', 'error');
       return;
     }
 
@@ -92,8 +92,8 @@ export default function Home() {
 
     if (!file) return;
 
-    if (file.size > 25 * 1024 * 1024) {
-      showNotification('Video kegedean, cuy. Maksimal 25MB.', 'error');
+    if (file.size > 15 * 1024 * 1024) {
+      showNotification('Ukuran video maksimal 15MB.', 'error');
       return;
     }
 
@@ -160,7 +160,7 @@ export default function Home() {
         handleUploadUrl: '/api/upload',
       });
 
-      showNotification('Ngirim task ke Magnific...', 'info');
+      showNotification('Mengirim permintaan ke Magnific...', 'info');
 
       const createResponse = await fetch('/api/create-task', {
         method: 'POST',
@@ -185,7 +185,7 @@ export default function Home() {
       const taskId = createData.taskId;
 
       if (!taskId) {
-        throw new Error('Task ID kosong. Magnific belum ngasih nomor antrean.');
+        throw new Error('Task ID kosong. Magnific belum memberikan nomor antrean.');
       }
 
       showNotification('Antrian diterima. Nunggu render video...', 'info');
@@ -226,7 +226,7 @@ export default function Home() {
               pollData.result?.url;
 
             if (!videoUrl) {
-              throw new Error('Render selesai, tapi link video nggak ketemu.');
+              throw new Error('Render selesai, tetapi link video tidak ditemukan.');
             }
 
             setResultVideo(videoUrl);
@@ -251,7 +251,7 @@ export default function Home() {
       setTimeout(poll, 5000);
     } catch (error) {
       setIsGenerating(false);
-      showNotification(error.message || 'Ada error pas generate.', 'error');
+      showNotification(error.message || 'Terjadi kesalahan saat membuat video.', 'error');
     }
   };
 
@@ -403,7 +403,7 @@ export default function Home() {
                   <div className="empty-state">
                     <UploadCloud size={48} />
                     <strong>Pilih foto dari perangkat</strong>
-                    <small>JPG / PNG / WEBP, maks 10 MB</small>
+                    <small>JPG / PNG / WEBP, maks 1.5 MB</small>
                   </div>
                 )}
 
@@ -458,7 +458,7 @@ export default function Home() {
                   <div className="empty-state">
                     <UploadCloud size={48} />
                     <strong>Pilih video dari perangkat</strong>
-                    <small>Maks 25 MB, 30 dtk, MP4/MOV/WEBM</small>
+                    <small>Maks 15 MB, 30 detik, MP4/MOV/WEBM</small>
                   </div>
                 )}
 
@@ -488,7 +488,7 @@ export default function Home() {
                 <textarea
                   value={prompt}
                   onChange={(event) => setPrompt(event.target.value.slice(0, 2500))}
-                  placeholder="Misal: gerakan tarian pargoy perlahan dengan senyuman..."
+                  placeholder="Contoh: karakter bergerak mengikuti referensi video dengan ekspresi natural..."
                   rows={4}
                 />
 

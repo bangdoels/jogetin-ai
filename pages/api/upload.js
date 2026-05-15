@@ -2,7 +2,7 @@ import { handleUpload } from '@vercel/blob/client';
 
 export default async function handler(request, response) {
   if (request.method !== 'POST') {
-    return response.status(405).json({ error: 'Method tidak boleh' });
+    return response.status(405).json({ error: 'Metode request tidak diizinkan.' });
   }
 
   try {
@@ -20,6 +20,7 @@ export default async function handler(request, response) {
             'video/webm',
             'video/x-m4v',
           ],
+          maximumSizeInBytes: 15 * 1024 * 1024,
           addRandomSuffix: true,
         };
       },
@@ -31,7 +32,7 @@ export default async function handler(request, response) {
     return response.status(200).json(jsonResponse);
   } catch (error) {
     return response.status(400).json({
-      error: error.message || 'Upload gagal',
+      error: error.message || 'Upload gagal diproses.',
     });
   }
 }
