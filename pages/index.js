@@ -116,14 +116,15 @@ export default function Home() {
       if (videoPreview) URL.revokeObjectURL(videoPreview);
 
       setVideoFile(file);
-      setVideoPreview(URL.createObjectURL(file));
+      setVideoPreview(objectUrl);
     };
 
     videoElement.onerror = () => {
       showNotification('Video gagal dibaca. Coba file MP4/MOV/WEBM lain.', 'error');
     };
 
-    videoElement.src = URL.createObjectURL(file);
+    const objectUrl = URL.createObjectURL(file);
+    videoElement.src = objectUrl;
   };
 
   const handleGenerate = async () => {
