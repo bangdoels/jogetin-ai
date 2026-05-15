@@ -25,9 +25,15 @@ export default async function handler(request, response) {
       return response.status(400).json({ error: 'Model tidak valid' });
     }
 
-    const pollEndpoint = model?.startsWith('kling-3') ? 'kling-v3' : 'kling-v2-6';
+    let pollUrl;
 
-    const pollUrl = `https://api.magnific.com/v1/ai/image-to-video/${pollEndpoint}/${taskId}`;
+    if (model === 'kling-3-std') {
+      pollUrl = `https://api.magnific.com/v1/ai/video/kling-v3-motion-control-std/${taskId}`;
+    } else if (model === 'kling-3-pro') {
+      pollUrl = `https://api.magnific.com/v1/ai/video/kling-v3-motion-control-pro/${taskId}`;
+    } else {
+      pollUrl = `https://api.magnific.com/v1/ai/image-to-video/kling-v2-6/${taskId}`;
+    }
 
     const magnificResponse = await fetch(pollUrl, {
       method: 'GET',
@@ -44,6 +50,8 @@ export default async function handler(request, response) {
         detail: data,
       });
     }
+
+    console.log('MAGNIFIC POLL RESPONSE:', JSON.stringify(data, null, 2));
 
     return response.status(200).json(data);
   } catch (error) {
