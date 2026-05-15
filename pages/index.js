@@ -281,12 +281,7 @@ export default function Home() {
                 JOGETIN <span>AI</span>
               </h1>
 
-              <p>Generator gerakan motion control cepat untuk karakter dan referensi video kamu.</p>
-
-              <div className="hero-note">
-                <span>Final UI</span>
-                <p>Desain rapi, pengalaman upload halus, dan hasil siap download dengan satu sentuhan.</p>
-              </div>
+              <p>free motion control generator by JOGETIN AI</p>
             </div>
           </header>
 
