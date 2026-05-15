@@ -209,7 +209,7 @@ export default function Home() {
             throw new Error(pollData.error || 'Gagal cek status task.');
           }
 
-          const status = pollData.status;
+          const status = pollData.status || pollData.data?.status;
 
           if (
             status === 'completed' ||
@@ -221,10 +221,20 @@ export default function Home() {
               pollData.output_url ||
               pollData.result_url ||
               pollData.url ||
+              pollData.data?.generated?.[0] ||
+              pollData.generated?.[0] ||
+              pollData.data?.video_url ||
+              pollData.data?.output_url ||
+              pollData.data?.result_url ||
+              pollData.data?.url ||
               pollData.output?.video_url ||
               pollData.output?.url ||
               pollData.result?.video_url ||
-              pollData.result?.url;
+              pollData.result?.url ||
+              pollData.data?.output?.video_url ||
+              pollData.data?.output?.url ||
+              pollData.data?.result?.video_url ||
+              pollData.data?.result?.url;
 
             if (!videoUrl) {
               throw new Error('Render selesai, tetapi link video tidak ditemukan.');
@@ -524,9 +534,8 @@ export default function Home() {
                       <button
                         type="button"
                         key={item.id}
-                        className={`dropdown-item ${
-                          orientation === item.id ? 'active' : ''
-                        }`}
+                        className={`dropdown-item ${orientation === item.id ? 'active' : ''
+                          }`}
                         onClick={() => {
                           setOrientation(item.id);
                           setIsOrientationDropdownOpen(false);
@@ -558,9 +567,8 @@ export default function Home() {
                   onChange={(event) => setCfgScale(parseFloat(event.target.value))}
                   className="range"
                   style={{
-                    background: `linear-gradient(to right, #8b5cf6 0%, #8b5cf6 ${
-                      cfgScale * 100
-                    }%, #3b3b4f ${cfgScale * 100}%, #3b3b4f 100%)`,
+                    background: `linear-gradient(to right, #8b5cf6 0%, #8b5cf6 ${cfgScale * 100
+                      }%, #3b3b4f ${cfgScale * 100}%, #3b3b4f 100%)`,
                   }}
                 />
               </div>
