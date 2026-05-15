@@ -310,7 +310,7 @@ export default function Home() {
             </div>
 
             <div className="field">
-              <label>Magnific / Freepik API Key</label>
+              <label>Masukkan API Key Anda</label>
 
               <div className="input-wrap">
                 <input
