@@ -147,21 +147,21 @@ export default function Home() {
     setResultVideo(null);
 
     try {
-      showNotification('Upload foto karakter dulu...', 'info');
+      showNotification('Menyiapkan karakter...', 'info');
 
       const uploadedImage = await upload(imageFile.name, imageFile, {
         access: 'public',
         handleUploadUrl: '/api/upload',
       });
 
-      showNotification('Upload video referensi...', 'info');
+      showNotification('Menganalisis video referensi...', 'info');
 
       const uploadedVideo = await upload(videoFile.name, videoFile, {
         access: 'public',
         handleUploadUrl: '/api/upload',
       });
 
-      showNotification('Mengirim permintaan ke Magnific...', 'info');
+      showNotification('Menyinkronkan gerakan...', 'info');
 
       const createResponse = await fetch('/api/create-task', {
         method: 'POST',
@@ -186,10 +186,10 @@ export default function Home() {
       const taskId = createData.taskId;
 
       if (!taskId) {
-        throw new Error('Task ID kosong. Magnific belum memberikan nomor antrean.');
+        throw new Error('Sistem belum berhasil memulai proses animasi.');
       }
 
-      showNotification('Antrian diterima. Nunggu render video...', 'info');
+      showNotification('Permintaan diterima. Sedang membuat animasi...', 'info');
 
       const poll = async () => {
         try {
@@ -206,13 +206,13 @@ export default function Home() {
           const pollData = await pollResponse.json();
 
           if (!pollResponse.ok) {
-            throw new Error(pollData.error || 'Gagal cek status task.');
+            throw new Error(pollData.error || 'Proses animasi terhenti. Silakan coba lagi.');
           }
 
           const status = pollData.status || pollData.data?.status;
 
           if (
-            status === 'completed' ||
+            status === 'COMPLETED' ||
             status === 'succeeded' ||
             status === 'success'
           ) {
@@ -248,7 +248,7 @@ export default function Home() {
 
           if (status === 'failed' || status === 'error') {
             setIsGenerating(false);
-            showNotification('Render gagal di server Magnific.', 'error');
+            showNotification('Terjadi kendala saat membuat animasi.', 'error');
             return;
           }
 
