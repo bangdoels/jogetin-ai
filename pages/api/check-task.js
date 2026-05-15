@@ -25,7 +25,7 @@ export default async function handler(request, response) {
       return response.status(400).json({ error: 'Model tidak valid' });
     }
 
-    const pollUrl = `https://api.magnific.com/v1/ai/video/${endpoint}/${taskId}`;
+    const pollUrl = `https://api.magnific.com/v1/ai/image-to-video/${endpoint}/${taskId}`;
 
     const magnificResponse = await fetch(pollUrl, {
       method: 'GET',
