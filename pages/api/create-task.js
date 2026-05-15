@@ -65,7 +65,12 @@ export default async function handler(request, response) {
       });
     }
 
-    const taskId = data.id || data.task_id;
+    const taskId =
+      data?.data?.task_id ||
+      data?.data?.id ||
+      data?.task_id ||
+      data?.id ||
+      data?.taskId;
 
     if (!taskId) {
       return response.status(500).json({
