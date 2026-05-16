@@ -292,7 +292,7 @@ export default function Home() {
                 JOGETIN <span>AI</span>
               </h1>
 
-              <p>free motion control generator by JOGETIN AI</p>
+              <p>Motion Control Video Generator</p>
             </div>
           </header>
 
